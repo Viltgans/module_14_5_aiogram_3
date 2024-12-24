@@ -6,7 +6,7 @@ from module_14.homework_14_5_v2.handlers import Messages, Registration, Buying, 
 
 
 async def main():
-    api = '7913615067:AAEeXF1fJTlHswTcBZkUZydPjQ_sXYOUK1Y'
+    api = ''
     bot = Bot(token = api)
     dp = Dispatcher(storage = MemoryStorage())
 
