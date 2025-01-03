@@ -138,25 +138,12 @@ async def all_massages(message: Message):
     with suppress(TelegramBadRequest):
         # Удаление всех сообщений не соответствующих команде /start
         await message.delete()
-        # Сообщение о необходимости ввести команду /start
-        message = await message.answer(f'{html.bold(html.quote(message.from_user.full_name))}! '
-                                       f'Введите команду /start, чтобы начать общение.', parse_mode='HTML')
-        pre_menu_messages.append(message.message_id)
-        # Удаление дубликатов сообщений о необходимости ввести команду /start
+        # Если список сообщений пуст по длине списка, то вывести его и добавить в список
+        if len(pre_menu_messages) == 0:
+            # Сообщение о необходимости ввести команду /start
+            message = await message.answer(f'{html.bold(html.quote(message.from_user.full_name))}! '
+                                           f'Введите команду /start, чтобы начать общение.', parse_mode='HTML')
+            pre_menu_messages.append(message.message_id)
+        # Если список сообщений не пуст по длине списка, то ничего не делать
         if len(pre_menu_messages) > 1:
-            await message.delete()
-        # Удаление дубликата приветственного сообщения при повторном вводе команды /start
-        await menu_func.delete_welcome_messages(message)
-        # Удаление дубликатов сообщений кнопки 'Информация'
-        await menu_func.delete_menu_information(message)
-        # Удаление дубликатов сообщений кнопки 'Рассчитать'
-        await menu_func.delete_menu_calc_and_formula(message)
-        await calculator_func.delete_all_menu_calc_and_formula(message)
-        # Удаление дубликатов сообщений кнопки 'Регистрация'
-        await menu_func.delete_menu_registration(message)
-        await reg_func.delete_all_reg_menu_messages(message)
-        # Удаление дубликатов подменю кнопки 'Рассчитать'
-        await calculator_func.delete_submenu_calc_and_formula(message)
-        # Удаление дубликатов сообщений кнопки 'Купить'
-        await menu_func.delete_menu_buy(message)
-        await buy_menu_func.delete_all_buy_menu_messages(message)
+            return
