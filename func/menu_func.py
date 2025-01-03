@@ -12,7 +12,6 @@ async def delete_pre_menu_messages(message: Message):
     with suppress(TelegramBadRequest):
         for msg_id in Messages.pre_menu_messages:
             await message.bot.delete_message(chat_id=message.chat.id, message_id=msg_id)
-        Messages.pre_menu_messages.clear()
 
 
 # Функция для удаления приветственного сообщения
